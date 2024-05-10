@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             child: Center(
               child: ChessBoard(
                 controller: controller,
-                boardColor: BoardColor.orange,
+                boardColor: BoardColor.green,
                 arrows: [
                   BoardArrow(
                     from: 'd2',
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                   BoardArrow(
                     from: 'e7',
                     to: 'e5',
-                    color: Colors.red.withOpacity(0.7),
+                    color: Colors.green.withOpacity(0.7),
                   ),
                 ],
                 boardOrientation: PlayerColor.white,

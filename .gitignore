@@ -11,3 +11,5 @@ ios/Runner/GeneratedPluginRegistrant.*
 
 # FVM Version Cache
 .fvm/
+.vscode/
+.fvmrc
