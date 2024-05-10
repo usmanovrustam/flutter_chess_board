@@ -1,25 +1,20 @@
 import 'dart:math';
 
 import 'package:chess/chess.dart' hide State;
-import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chess_board/src/pieces.dart';
 
 import 'board_arrow.dart';
 import 'chess_board_controller.dart';
 import 'constants.dart';
 
 class ChessBoard extends StatefulWidget {
-  /// An instance of [ChessBoardController] which holds the game and allows
-  /// manipulating the board programmatically.
   final ChessBoardController controller;
 
-  /// Size of chessboard
   final double? size;
 
-  /// A boolean which checks if the user should be allowed to make moves
   final bool enableUserMoves;
 
-  /// The color type of the board
   final BoardColor boardColor;
 
   final PlayerColor boardOrientation;
@@ -101,7 +96,6 @@ class _ChessBoardState extends State<ChessBoard> {
                     }, onWillAcceptWithDetails: (pieceMoveData) {
                       return widget.enableUserMoves ? true : false;
                     }, onAcceptWithDetails: (pieceMoveData) async {
-                      // A way to check if move occurred.
                       Color moveColor = game.turn;
 
                       if (pieceMoveData.data.pieceType == "P" &&
@@ -160,7 +154,6 @@ class _ChessBoardState extends State<ChessBoard> {
     );
   }
 
-  /// Returns the board image
   Image _getBoardImage(BoardColor color) {
     switch (color) {
       case BoardColor.brown:
@@ -196,7 +189,6 @@ class _ChessBoardState extends State<ChessBoard> {
     }
   }
 
-  /// Show dialog when pawn reaches last square
   Future<String?> _promotionDialog(BuildContext context) async {
     return showDialog<String>(
       context: context,
@@ -208,25 +200,25 @@ class _ChessBoardState extends State<ChessBoard> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               InkWell(
-                child: WhiteQueen(),
+                child: _PieceWidget(source: Pieces.whiteKing),
                 onTap: () {
                   Navigator.of(context).pop("q");
                 },
               ),
               InkWell(
-                child: WhiteRook(),
+                child: _PieceWidget(source: Pieces.whiteRook),
                 onTap: () {
                   Navigator.of(context).pop("r");
                 },
               ),
               InkWell(
-                child: WhiteBishop(),
+                child: _PieceWidget(source: Pieces.whiteBipshop),
                 onTap: () {
                   Navigator.of(context).pop("b");
                 },
               ),
               InkWell(
-                child: WhiteKnight(),
+                child: _PieceWidget(source: Pieces.whiteKnight),
                 onTap: () {
                   Navigator.of(context).pop("n");
                 },
@@ -265,46 +257,62 @@ class BoardPiece extends StatelessWidget {
 
     switch (piece) {
       case "WP":
-        imageToDisplay = WhitePawn();
+        imageToDisplay = _PieceWidget(source: Pieces.whitePawn);
         break;
       case "WR":
-        imageToDisplay = WhiteRook();
+        imageToDisplay = _PieceWidget(source: Pieces.whiteRook);
         break;
       case "WN":
-        imageToDisplay = WhiteKnight();
+        imageToDisplay = _PieceWidget(source: Pieces.whiteKnight);
         break;
       case "WB":
-        imageToDisplay = WhiteBishop();
+        imageToDisplay = _PieceWidget(source: Pieces.whiteBipshop);
         break;
       case "WQ":
-        imageToDisplay = WhiteQueen();
+        imageToDisplay = _PieceWidget(source: Pieces.whiteQueen);
         break;
       case "WK":
-        imageToDisplay = WhiteKing();
+        imageToDisplay = _PieceWidget(source: Pieces.whiteKing);
         break;
       case "BP":
-        imageToDisplay = BlackPawn();
+        imageToDisplay = _PieceWidget(source: Pieces.blackPawn);
         break;
       case "BR":
-        imageToDisplay = BlackRook();
+        imageToDisplay = _PieceWidget(source: Pieces.blackRook);
         break;
       case "BN":
-        imageToDisplay = BlackKnight();
+        imageToDisplay = _PieceWidget(source: Pieces.blackKnight);
         break;
       case "BB":
-        imageToDisplay = BlackBishop();
+        imageToDisplay = _PieceWidget(source: Pieces.blackBipshop);
         break;
       case "BQ":
-        imageToDisplay = BlackQueen();
+        imageToDisplay = _PieceWidget(source: Pieces.blackQueen);
         break;
       case "BK":
-        imageToDisplay = BlackKing();
+        imageToDisplay = _PieceWidget(source: Pieces.blackKing);
         break;
       default:
-        imageToDisplay = WhitePawn();
+        imageToDisplay = _PieceWidget(source: Pieces.blackPawn);
     }
 
     return imageToDisplay;
+  }
+}
+
+class _PieceWidget extends StatelessWidget {
+  final String source;
+  const _PieceWidget({required this.source});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      source,
+      package: 'flutter_chess_board',
+      fit: BoxFit.cover,
+      width: 45,
+      height: 45,
+    );
   }
 }
 

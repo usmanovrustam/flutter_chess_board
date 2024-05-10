@@ -3,8 +3,8 @@ description: A Chessboard Widget for Flutter. Full support for PGN, FEN, SAN. Un
 version: 1.0.4
 
 dependencies:
-  chess: ^0.7.0
-  chess_vectors_flutter: ^1.0.12
+  chess: 0.7.0
+  tuple: 2.0.2
 
   flutter:
     sdk: flutter
@@ -30,6 +30,7 @@ flutter:
     - assets/images/
     - assets/images/2.0x/
     - assets/images/3.0x/
+    - assets/images/pieces/
   #
   # For details regarding assets in packages, see
   # https://flutter.io/assets-and-images/#from-packages
