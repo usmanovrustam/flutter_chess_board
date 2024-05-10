@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
 
 environment:
-    sdk: ">2.12.0 <3.0.0"
+    sdk: ">=3.3.0-149.0.dev <4.0.0"
 
 dev_dependencies:
   flutter_test:
@@ -29,15 +29,16 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - images/chess_board.png
+    - images/green_board.png
     - images/brown_board.png
     - images/2.0x/brown_board.png
     - images/3.0x/brown_board.png
     - images/orange_board.png
     - images/2.0x/orange_board.png
     - images/3.0x/orange_board.png
-    - images/green_board.png
-    - images/2.0x/green_board.png
-    - images/3.0x/green_board.png
+    - images/blue_board.png
+    - images/2.0x/blue_board.png
+    - images/3.0x/blue_board.png
     - images/dark_brown_board.png
     - images/2.0x/dark_brown_board.png
     - images/3.0x/dark_brown_board.png

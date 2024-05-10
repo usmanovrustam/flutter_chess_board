@@ -1,8 +1,9 @@
 import 'dart:math';
 
+import 'package:chess/chess.dart' hide State;
 import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:chess/chess.dart' hide State;
+
 import 'board_arrow.dart';
 import 'chess_board_controller.dart';
 import 'constants.dart';
@@ -97,24 +98,26 @@ class _ChessBoardState extends State<ChessBoard> {
                     var dragTarget =
                         DragTarget<PieceMoveData>(builder: (context, list, _) {
                       return draggable;
-                    }, onWillAccept: (pieceMoveData) {
+                    }, onWillAcceptWithDetails: (pieceMoveData) {
                       return widget.enableUserMoves ? true : false;
-                    }, onAccept: (PieceMoveData pieceMoveData) async {
+                    }, onAcceptWithDetails: (pieceMoveData) async {
                       // A way to check if move occurred.
                       Color moveColor = game.turn;
 
-                      if (pieceMoveData.pieceType == "P" &&
-                          ((pieceMoveData.squareName[1] == "7" &&
+                      if (pieceMoveData.data.pieceType == "P" &&
+                          ((pieceMoveData.data.squareName[1] == "7" &&
                                   squareName[1] == "8" &&
-                                  pieceMoveData.pieceColor == Color.WHITE) ||
-                              (pieceMoveData.squareName[1] == "2" &&
+                                  pieceMoveData.data.pieceColor ==
+                                      Color.WHITE) ||
+                              (pieceMoveData.data.squareName[1] == "2" &&
                                   squareName[1] == "1" &&
-                                  pieceMoveData.pieceColor == Color.BLACK))) {
+                                  pieceMoveData.data.pieceColor ==
+                                      Color.BLACK))) {
                         var val = await _promotionDialog(context);
 
                         if (val != null) {
                           widget.controller.makeMoveWithPromotion(
-                            from: pieceMoveData.squareName,
+                            from: pieceMoveData.data.squareName,
                             to: squareName,
                             pieceToPromoteTo: val,
                           );
@@ -123,7 +126,7 @@ class _ChessBoardState extends State<ChessBoard> {
                         }
                       } else {
                         widget.controller.makeMove(
-                          from: pieceMoveData.squareName,
+                          from: pieceMoveData.data.squareName,
                           to: squareName,
                         );
                       }
@@ -172,15 +175,21 @@ class _ChessBoardState extends State<ChessBoard> {
           package: 'flutter_chess_board',
           fit: BoxFit.cover,
         );
-      case BoardColor.green:
+      case BoardColor.blue:
         return Image.asset(
-          "images/green_board.png",
+          "images/blue_board.png",
           package: 'flutter_chess_board',
           fit: BoxFit.cover,
         );
       case BoardColor.orange:
         return Image.asset(
           "images/orange_board.png",
+          package: 'flutter_chess_board',
+          fit: BoxFit.cover,
+        );
+      case BoardColor.green:
+        return Image.asset(
+          "images/green_board.png",
           package: 'flutter_chess_board',
           fit: BoxFit.cover,
         );

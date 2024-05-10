@@ -5,6 +5,7 @@ enum BoardColor {
   brown,
   darkBrown,
   orange,
+  blue,
   green,
 }
 
