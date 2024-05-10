@@ -8,8 +8,8 @@ import 'board_arrow.dart';
 import 'chess_board_controller.dart';
 import 'constants.dart';
 
-class ChessBoard extends StatefulWidget {
-  final ChessBoardController controller;
+class ChessBoardWidget extends StatefulWidget {
+  final ChessController controller;
 
   final double? size;
 
@@ -23,7 +23,7 @@ class ChessBoard extends StatefulWidget {
 
   final List<BoardArrow> arrows;
 
-  const ChessBoard({
+  const ChessBoardWidget({
     Key? key,
     required this.controller,
     this.size,
@@ -35,10 +35,10 @@ class ChessBoard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ChessBoard> createState() => _ChessBoardState();
+  State<ChessBoardWidget> createState() => _ChessBoardWidgetState();
 }
 
-class _ChessBoardState extends State<ChessBoard> {
+class _ChessBoardWidgetState extends State<ChessBoardWidget> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<Chess>(

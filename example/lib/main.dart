@@ -28,7 +28,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  ChessBoardController controller = ChessBoardController();
+  ChessController controller = ChessController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: Center(
-              child: ChessBoard(
+              child: ChessBoardWidget(
                 controller: controller,
                 boardColor: BoardColor.green,
                 arrows: [
