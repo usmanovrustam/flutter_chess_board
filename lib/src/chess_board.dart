@@ -23,6 +23,8 @@ class ChessBoardWidget extends StatefulWidget {
 
   final List<BoardArrow> arrows;
 
+  final BoardSquare? square;
+
   const ChessBoardWidget({
     Key? key,
     required this.controller,
@@ -32,6 +34,7 @@ class ChessBoardWidget extends StatefulWidget {
     this.boardOrientation = PlayerColor.white,
     this.onMove,
     this.arrows = const [],
+    this.square,
   }) : super(key: key);
 
   @override
@@ -41,6 +44,7 @@ class ChessBoardWidget extends StatefulWidget {
 class _ChessBoardWidgetState extends State<ChessBoardWidget> {
   @override
   Widget build(BuildContext context) {
+    final List<String> positions = widget.square?.positions ?? [];
     return ValueListenableBuilder<Chess>(
       valueListenable: widget.controller,
       builder: (context, game, _) {
@@ -53,6 +57,23 @@ class _ChessBoardWidgetState extends State<ChessBoardWidget> {
                 child: _getBoardImage(widget.boardColor),
                 aspectRatio: 1.0,
               ),
+              if (widget.square != null && positions.isNotEmpty)
+                IgnorePointer(
+                  child: AspectRatio(
+                    aspectRatio: 1.0,
+                    child: CustomPaint(
+                      child: Container(),
+                      painter: _SquarePainter(
+                        boardOrientation: widget.boardOrientation,
+                        square: widget.square ??
+                            BoardSquare(
+                              positions: [],
+                              color: MaterialColor(0xffbaca44, {}),
+                            ),
+                      ),
+                    ),
+                  ),
+                ),
               AspectRatio(
                 aspectRatio: 1.0,
                 child: GridView.builder(
@@ -326,6 +347,64 @@ class PieceMoveData {
     required this.pieceType,
     required this.pieceColor,
   });
+}
+
+class BoardSquare {
+  List<String> positions;
+  MaterialColor color;
+
+  BoardSquare({
+    required this.positions,
+    this.color = const MaterialColor(0xffbaca44, {}),
+  });
+}
+
+class _SquarePainter extends CustomPainter {
+  BoardSquare square;
+  PlayerColor boardOrientation;
+
+  _SquarePainter({required this.square, required this.boardOrientation});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    List<String> positions = [];
+    positions.addAll(square.positions.map((position) {
+      if (position.length > 2) return position.substring(1);
+      return position;
+    }).toList());
+
+    var blockSize = size.width / 8;
+
+    for (var position in positions) {
+      var file = files.indexOf(position[0]);
+      var rank = int.parse(position[1]) - 1;
+
+      int effectiveColumn, effectiveRow;
+      if (boardOrientation == PlayerColor.black) {
+        effectiveColumn = 7 - file;
+        effectiveRow = rank;
+      } else {
+        effectiveColumn = file;
+        effectiveRow = 7 - rank;
+      }
+
+      var topLeft = Offset(
+        effectiveColumn * blockSize,
+        effectiveRow * blockSize,
+      );
+
+      var paint = Paint()..color = square.color;
+      canvas.drawRect(
+        Rect.fromLTWH(topLeft.dx, topLeft.dy, blockSize, blockSize),
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_SquarePainter oldDelegate) {
+    return square != oldDelegate.square;
+  }
 }
 
 class _ArrowPainter extends CustomPainter {

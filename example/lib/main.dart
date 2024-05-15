@@ -43,18 +43,9 @@ class _HomePageState extends State<HomePage> {
               child: ChessBoardWidget(
                 controller: controller,
                 boardColor: BoardColor.green,
-                arrows: [
-                  BoardArrow(
-                    from: 'd2',
-                    to: 'd4',
-                    //color: Colors.red.withOpacity(0.5),
-                  ),
-                  BoardArrow(
-                    from: 'e7',
-                    to: 'e5',
-                    color: Colors.green.withOpacity(0.7),
-                  ),
-                ],
+                square: BoardSquare(
+                  positions: ["Bb5", "Ba6"],
+                ),
                 boardOrientation: PlayerColor.white,
               ),
             ),
