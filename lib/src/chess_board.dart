@@ -369,6 +369,7 @@ class _SquarePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     List<String> positions = [];
     positions.addAll(square.positions.map((position) {
+      if (position.length > 3) return position.substring(2);
       if (position.length > 2) return position.substring(1);
       return position;
     }).toList());

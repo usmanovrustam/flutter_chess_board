@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                 controller: controller,
                 boardColor: BoardColor.green,
                 square: BoardSquare(
-                  positions: ["Bb5", "Ba6"],
+                  positions: ["Bb5", "Ba6", "Rhe1"],
                 ),
                 boardOrientation: PlayerColor.white,
               ),
