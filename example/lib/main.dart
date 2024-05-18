@@ -36,6 +36,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  final list = ["Bb5", "Ba6"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,9 +51,7 @@ class _HomePageState extends State<HomePage> {
               child: ChessBoardWidget(
                 controller: controller,
                 boardColor: BoardColor.green,
-                square: BoardSquare(
-                  positions: ["Bb5", "Ba6"],
-                ),
+                square: BoardSquare(positions: list),
                 onMove: () {},
                 boardOrientation: PlayerColor.white,
               ),
