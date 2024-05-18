@@ -205,7 +205,6 @@ class ChessController extends ValueNotifier<Chess> {
             .toList()
             .contains(move.fromAlgebraic)) {
           possiblePieces.add(move.fromAlgebraic);
-          print(possiblePieces);
         }
       }
     }
