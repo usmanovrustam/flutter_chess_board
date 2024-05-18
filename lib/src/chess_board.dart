@@ -54,12 +54,14 @@ class _ChessBoardWidgetState extends State<ChessBoardWidget> {
         currentPositions.add(currentPosition);
     }
 
-    return currentPositions.first;
+    return currentPositions.isNotEmpty ? currentPositions.first : "";
   }
 
   @override
   Widget build(BuildContext context) {
-    (widget.square?.positions ?? []).add(currentPiece);
+    if (currentPiece.isNotEmpty)
+      (widget.square?.positions ?? []).add(currentPiece);
+
     final List<String> positions = widget.square?.positions ?? [];
 
     return ValueListenableBuilder<Chess>(
