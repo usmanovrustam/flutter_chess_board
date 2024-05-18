@@ -42,9 +42,26 @@ class ChessBoardWidget extends StatefulWidget {
 }
 
 class _ChessBoardWidgetState extends State<ChessBoardWidget> {
+  String get currentPiece {
+    List<String> currentPositions = [];
+    for (String position in widget.square?.positions ?? []) {
+      final square =
+          position[position.length - 2] + position[position.length - 1];
+
+      final currentPosition = widget.controller.findPiece(square);
+
+      if (!currentPositions.contains(currentPosition))
+        currentPositions.add(currentPosition);
+    }
+
+    return currentPositions.first;
+  }
+
   @override
   Widget build(BuildContext context) {
+    (widget.square?.positions ?? []).add(currentPiece);
     final List<String> positions = widget.square?.positions ?? [];
+
     return ValueListenableBuilder<Chess>(
       valueListenable: widget.controller,
       builder: (context, game, _) {
@@ -163,8 +180,10 @@ class _ChessBoardWidgetState extends State<ChessBoardWidget> {
                     aspectRatio: 1.0,
                     child: CustomPaint(
                       child: Container(),
-                      painter:
-                          _ArrowPainter(widget.arrows, widget.boardOrientation),
+                      painter: _ArrowPainter(
+                        widget.arrows,
+                        widget.boardOrientation,
+                      ),
                     ),
                   ),
                 ),

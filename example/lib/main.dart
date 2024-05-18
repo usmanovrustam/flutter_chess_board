@@ -31,6 +31,12 @@ class _HomePageState extends State<HomePage> {
   ChessController controller = ChessController();
 
   @override
+  void initState() {
+    controller.loadPGN("1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -44,24 +50,11 @@ class _HomePageState extends State<HomePage> {
                 controller: controller,
                 boardColor: BoardColor.green,
                 square: BoardSquare(
-                  positions: ["Bb5", "Ba6", "Rhe1"],
+                  positions: ["Bb5", "Ba6"],
                 ),
+                onMove: () {},
                 boardOrientation: PlayerColor.white,
               ),
-            ),
-          ),
-          Expanded(
-            child: ValueListenableBuilder<Chess>(
-              valueListenable: controller,
-              builder: (context, game, _) {
-                return Text(
-                  controller.getSan().fold(
-                        '',
-                        (previousValue, element) =>
-                            previousValue + '\n' + (element ?? ''),
-                      ),
-                );
-              },
             ),
           ),
         ],

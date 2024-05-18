@@ -142,4 +142,73 @@ class ChessController extends ValueNotifier<Chess> {
         return Piece(PieceType.ROOK, convertedColor);
     }
   }
+
+  Map<String, List<String>> getPiecePosition(
+    PieceType pieceType,
+    PlayerColor pieceColor,
+  ) {
+    Map<String, List<String>> positions = {};
+
+    var convertedColor =
+        pieceColor == PlayerColor.white ? Color.WHITE : Color.BLACK;
+
+    List<String> rows = game
+        .generate_fen()
+        .split('/')
+        .map((element) => element.split(' ')[0])
+        .toList();
+
+    for (int rank = 7; rank >= 0; rank--) {
+      String row = rows[7 - rank];
+      int file = 0;
+
+      for (int i = 0; i < row.length; i++) {
+        String char = row[i];
+        if (RegExp(r'\d').hasMatch(char)) {
+          file += int.parse(char);
+        } else {
+          Color pieceColorInSquare =
+              char.toUpperCase() == char ? Color.WHITE : Color.BLACK;
+          if ((char.toUpperCase() == pieceType.toUpperCase() ||
+                  char.toLowerCase() == pieceType.toLowerCase()) &&
+              pieceColorInSquare == convertedColor) {
+            String square = '${files[file]}${rank + 1}';
+            positions.putIfAbsent(char, () => []).add(square);
+          }
+          file++;
+        }
+      }
+    }
+
+    return positions;
+  }
+
+  String findPiece(String targetSquare) {
+    List<String> possiblePieces = [];
+
+    List<Move> possibleMoves = getPossibleMoves();
+
+    final position = getPiecePosition(PieceType.BISHOP, PlayerColor.white);
+
+    List<String> from = [];
+    List<String> to = [];
+
+    for (Move move in possibleMoves) {
+      if (!from.contains(move.fromAlgebraic)) from.add(move.fromAlgebraic);
+      if (!to.contains(move.toAlgebraic)) to.add(move.toAlgebraic);
+    }
+
+    for (Move move in possibleMoves) {
+      if (move.toAlgebraic == targetSquare) {
+        if (position.values
+            .expand((i) => i)
+            .toList()
+            .contains(move.fromAlgebraic)) {
+          possiblePieces.add(move.fromAlgebraic);
+        }
+      }
+    }
+
+    return possiblePieces.first;
+  }
 }
