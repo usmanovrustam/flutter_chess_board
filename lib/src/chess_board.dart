@@ -48,7 +48,10 @@ class _ChessBoardWidgetState extends State<ChessBoardWidget> {
       final square =
           position[position.length - 2] + position[position.length - 1];
 
-      final currentPosition = widget.controller.findPiece(square);
+      final currentPosition = widget.controller.findPiece(
+        position,
+        square,
+      );
 
       if (!currentPositions.contains(currentPosition))
         currentPositions.add(currentPosition);

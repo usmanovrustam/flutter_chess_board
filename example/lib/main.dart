@@ -32,11 +32,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    controller.loadPGN("1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5");
+    controller.loadPGN(
+        "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. Na3 d6 5. d3 f6 6. Bf4 b6 7. Ke2 Be6 8. Qd2");
     super.initState();
   }
 
-  final list = ["Bb5", "Ba6"];
+  final list = ["Rhe1"];
 
   @override
   Widget build(BuildContext context) {

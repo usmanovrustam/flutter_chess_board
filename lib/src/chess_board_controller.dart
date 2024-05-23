@@ -183,12 +183,45 @@ class ChessController extends ValueNotifier<Chess> {
     return positions;
   }
 
-  String findPiece(String targetSquare) {
+  String findPiece(String correctMove, String targetSquare) {
     List<String> possiblePieces = [];
 
     List<Move> possibleMoves = getPossibleMoves();
 
-    final position = getPiecePosition(PieceType.BISHOP, PlayerColor.white);
+    PieceType pieceType = PieceType.PAWN;
+
+    if (correctMove.length > 2) {
+      if (correctMove.startsWith("K")) {
+        pieceType = PieceType.KING;
+      }
+      if (correctMove.startsWith("Q")) {
+        pieceType = PieceType.QUEEN;
+      }
+      if (correctMove.startsWith("N")) {
+        pieceType = PieceType.KNIGHT;
+      }
+      if (correctMove.startsWith("R")) {
+        pieceType = PieceType.ROOK;
+      }
+      if (correctMove.startsWith("B")) {
+        pieceType = PieceType.BISHOP;
+      }
+    }
+
+    final position = getPiecePosition(pieceType, PlayerColor.white);
+
+    // TODO: need to implement if multiple pieceses can move to the same square
+    // if (correctMove.length > 3) {
+    //   List<String> field = [];
+
+    //   position.values.first.forEach((element) {
+    //     field.add(element[0]);
+    //   });
+
+    //   if (field.contains(correctMove[1])) {
+    //     // print(correctMove[1]);
+    //   }
+    // }
 
     List<String> from = [];
     List<String> to = [];
